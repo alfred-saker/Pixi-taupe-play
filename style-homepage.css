@@ -1,0 +1,79 @@
+* {
+	margin: auto;
+	padding: 0;
+}
+
+.home {
+	position: relative;
+}
+
+.skyline {
+	background: linear-gradient(to bottom, #63AD9C, #FFF);
+	height: 100vh;
+	overflow: hidden;
+	position: relative;
+}
+
+.score {
+	background: linear-gradient(to bottom, #FFD85A, #FFF);
+	height: 100vh;
+	overflow: hidden;
+	position: relative;
+}
+
+.forest {
+	max-width: 100%;
+	height: 100vh;
+	object-fit: cover;
+	position: absolute;
+	bottom: 0;
+	transform: translateY(15%);
+}
+
+h1 {
+	font-family: "Merienda";
+	font-size: 48px;
+	font-weight: 700;
+	text-transform: uppercase;
+	position: absolute;
+	top: 10%;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 1;
+}
+
+.start {
+	padding: 16px 40px;
+	background-color: #FFD85A;
+	border-radius: 20px;
+	font-family: "Merienda";
+	color: #15473F;
+	font-size: 26px;
+	font-weight: 700;
+	text-decoration: none;
+	text-transform: uppercase;
+	position: absolute;
+	bottom: 50%;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 2;
+}
+
+.mole-inside-hole {
+	position: absolute;
+	z-index: 3;
+	bottom: 3%;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.hole {
+	display: block;
+}
+
+.mole {
+	position: absolute;
+	top: 25%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
