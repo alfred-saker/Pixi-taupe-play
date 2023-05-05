@@ -25,34 +25,41 @@ let imgArray = new Array()
 
 imgArray[0] = new Image();
 imgArray[0].src = './images/1.png';
+imgArray[0].bot ='/images/11.png';
 imgArray[0].width = 177;
 imgArray[0].height = 143;
 
 imgArray[1] = new Image();
 imgArray[1].src = './images/2.png';
+imgArray[1].bot ='/images/22.png';
 imgArray[1].width = 139;
 imgArray[1].height = 136;
 
 imgArray[2] = new Image();
 imgArray[2].src = './images/3.png';
+imgArray[2].bot ='/images/33.png';
 imgArray[2].width = 135;
 imgArray[2].height = 146;
 
 imgArray[3] = new Image();
 imgArray[3].src = './images/4.png';
+imgArray[3].bot ='/images/44.png';
 imgArray[3].width = 150;
 imgArray[3].height = 140;
 
 imgArray[4] = new Image();
 imgArray[4].src = './images/Pikachu.png';
+imgArray[4].bot ='/images/pikachu_.png';
 imgArray[4].width = 144;
 imgArray[4].height = 130;
 
 imgArray[5] = new Image();
 imgArray[5].src = './images/6.png';
+imgArray[5].bot ='/images/66.png';
 imgArray[5].width = 196;
 imgArray[5].height = 196;
 
+console.log(imgArray[5].bot)
 
 // Tableau des positions des trous
 let trouePositions = [
@@ -90,7 +97,7 @@ for (let i = 0; i < trouePositions.length; i++) {
 }
 // Création des trous légèrement plats
 let randomAnimal;
-let animalsArray = [null, null, null, null, null, null, null, null];
+let animalsArray = [null, null, null, null, null, null, null, null,null];
 let choixAnimals=0;
 for (let i = 0; i < trouePositions.length; i++) {
   let troue = new PIXI.Graphics();
@@ -100,27 +107,17 @@ for (let i = 0; i < trouePositions.length; i++) {
   troue.position.x = trouePositions[i].x;
   troue.position.y = trouePositions[i].y;
   app.stage.addChild(troue);
-  // Ajout des images a chaque trou
-  console.log(imgArray.length);
 }
 
-for(choixAnimals; choixAnimals<animalsArray.length; choixAnimals++){
-  if(animalsArray[choixAnimals] != null){
-    console.log(choixAnimals);
-    animalsArray[choixAnimals].eventMode = 'dynamic';
-    animalsArray[choixAnimals].cursor = 'pointer';
-    animalsArray[choixAnimals].on('pointerdown', onClick);
-    app.stage.addChild(animalsArray[choixAnimals]);
-    console.log(animalsArray[choixAnimals].cursor);
-  }
-}
 function createAnimal(indexTrou){
   randomAnimal = Math.floor(Math.random() * imgArray.length);
   var landscapeTexture = PIXI.Texture.from(imgArray[randomAnimal].src);
-  console.log(landscapeTexture);
+  // console.log(landscapeTexture);
   var texture2 = new PIXI.Texture(landscapeTexture, new PIXI.Rectangle(0, 0, imgArray[randomAnimal].width , imgArray[randomAnimal].height));
   var sprite_image = new PIXI.Sprite(texture2);
-  animalsArray.push(sprite_image);
+  sprite_image.holeIndex = indexTrou
+  animalsArray[indexTrou] = (sprite_image);
+  // sprite_image.index = indexTrou;
   sprite_image.anchor.x = 0;
   sprite_image.anchor.y = 0;
   sprite_image.position.x = imagePositions[indexTrou].x - 50;
@@ -131,21 +128,44 @@ function createAnimal(indexTrou){
 
   app.stage.addChild( sprite_image );
 }
-function onClick() {
-  console.log(this);
+
+
+// Delete clicked animal
+function smashAnimal() {
   this.scale.x *= 1.25;
   this.scale.y *= 1.25;
+  // var spriteIndex = animalsArray.indexOf(this);
+  // spriteIndex= this.index;
+  // console.log(spriteIndex);
+  // animalsArray.fill(null, spriteIndex, spriteIndex + 1);
+  console.log(this.holeIndex);
+  animalsArray[this.holeIndex] = null;
   app.stage.removeChild(this);
 }
+
 // Boucle de rendu
 function gameLoop() {
   for(let checkHole=0; checkHole<trouePositions.length; checkHole++){
-    if(Math.random() * 100 > 99){
-      createAnimal(checkHole);
+    // On vérifie s'il y a deja un animal dans le trou n° checkHole
+    if(animalsArray[checkHole]== null){
+      if(Math.random() * 100 > 99){
+        createAnimal(checkHole);
+        console.log(checkHole);
+      }
     }
   }
-  // animalsArray[0].y -= 1;
+  // animalsArray[checkHole].y -= 1;
 
+  for(choixAnimals = 0; choixAnimals<animalsArray.length; choixAnimals++){
+    if(animalsArray[choixAnimals] != null){
+      // console.log(choixAnimals);
+      animalsArray[choixAnimals].eventMode = 'dynamic';
+      animalsArray[choixAnimals].cursor = 'pointer';
+      animalsArray[choixAnimals].on('click', smashAnimal);
+      app.stage.addChild(animalsArray[choixAnimals]);
+      // console.log(animalsArray[choixAnimals]);
+    }
+  }
   requestAnimationFrame(gameLoop);
   // Mise à jour du jeu
   // ...
