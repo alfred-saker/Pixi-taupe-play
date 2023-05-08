@@ -10,7 +10,7 @@ var centi = 0;
 
 var gameRunning = true; // Variable de contrôle pour vérifier si le jeu est en cours
 
-// LE CHRONOMETRE 
+// LE CHRONOMETRE  
 (function () {
   timer = setInterval(() => {
     ele.innerHTML = '00:' + sec;
